@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        function setTable(product){
+            var heads=[];
+            var i,j;
+            var tablehead="";
+            for(i in product[0]){
+                 heads.push(i);
+                 tablehead+="<th>"+i+"</th>";   
+            }
+            var tablerow="";
+            document.getElementById("thead").innerHTML=tablehead;
+            for(i=0;i<product.length;i++){
+                tablerow+="<tr>";
+                for(j=0;j<heads.length;j++){
+                    tablerow+="<td>"+product[i][heads[j]]+"</td>";
+                }
+                tablerow+="</tr>";
+            }
+            document.getElementById("tbody").innerHTML=tablerow;
+
+        }
+        function authorize(product) {
+            return new Promise((resolve, reject) => {
+                let http = new XMLHttpRequest();
+                http.onload = function () {
+                    resolve(http.response); 
+                };
+                http.onerror = function (e) {
+                    reject(e); 
+                };
+        
+                http.open(
+                    "POST",
+                    "http://localhost:9080/"
+                );
+                http.setRequestHeader('Authorization', `${product}`); 
+                http.send();
+            });
+        }
+
+        function getData(id) {
+            return new Promise((resolve, reject) => {
+                let http = new XMLHttpRequest();
+                
+                http.onload = function () {
+                    
+                    resolve(http.response); 
+                };
+                http.onerror = function (e) {
+                    
+                    reject(e); 
+                };
+                
+                http.open(
+                    "GET",
+                    "http://localhost:9080/home"
+                );
+                console.log("Id="+id);
+                if( id === undefined || id===''){
+                    http.setRequestHeader('id',0); 
+                }
+                else{
+                    http.setRequestHeader('id',parseInt(id)); 
+                }
+              
+                http.send();
+                
+            });
+        }
+
+        function deleteData(id) {
+            return new Promise(function (resolve, reject) {
+                var http = new XMLHttpRequest();
+
+                http.onload = function () {
+                resolve(http.response);
+                };
+
+                http.onerror = function (e) {
+                reject(e);
+                };
+                
+                http.open("DELETE", "http://localhost:9080/home");
+                http.setRequestHeader('id',parseInt(id));
+                http.send();
+            });
+        }
+
+        function postData(product) {
+            return new Promise(function (resolve, reject) {
+                var http = new XMLHttpRequest();
+
+                http.onload = function () {
+                resolve(http.response);
+                };
+
+                http.onerror = function (e) {
+                reject(e);
+                };
+
+                http.open("POST", "http://localhost:9080/home");
+                http.send(JSON.stringify(product));
+            });
+        }
+
+        function putData(id, product) {
+            return new Promise(function (resolve, reject) {
+                var http = new XMLHttpRequest();
+
+                http.onload = function () {
+                resolve(http.response);
+                };
+
+                http.onerror = function (e) {
+                reject(e);
+                };
+
+                http.open("PUT", "http://localhost:9080/home");
+                http.setRequestHeader('id',parseInt(id));
+                http.send(JSON.stringify(product));
+            });
+        }
+
+        window.onload=function(){
+            let sbtbtn=document.getElementById('sbtbtn');
+            sbtbtn.addEventListener('click',function(){
+                let username=document.getElementById('username').value;
+                let pass=document.getElementById('password').value;
+                let response = authorize(`Basic ${username}:${pass}`); 
+                response.then(function(resp){
+                    if(resp==='"Valid"'){
+                        document.getElementById('val').innerHTML = "You have successfully logged in.";
+                        document.getElementById('crud').style.display="";
+                        document.getElementById('dvdata').innerText = "";
+                        document.getElementById('tbody').innerHTML="";
+                        document.getElementById('thead').innerHTML="";
+                    }else{ 
+                        if(resp==='"Invalid"'){
+                            document.getElementById('val').innerHTML = 'Invalid User-Name or Password.';
+                            document.getElementById('crud').style.display="none";
+                        }
+                    }
+                }).catch(function(e){
+                    document.getElementById('val').innerHTML = e;
+                    document.getElementById('tbody').innerHTML="";
+                    document.getElementById('thead').innerHTML="";
+                    
+                });
+            },false);
+
+            document.getElementById('getdata').addEventListener('click',function(){
+                let response = getData(document.getElementById('getid').value);
+                response.then(function(resp){
+                   let prod=JSON.parse(resp);
+                   if(prod[0].ProductId===undefined){
+                    document.getElementById('dvdata').innerText = resp;
+                    document.getElementById('tbody').innerHTML="";
+                        document.getElementById('thead').innerHTML="";
+                   }
+                   else{
+                    setTable(prod);
+                    document.getElementById('dvdata').innerText = "";
+                   }
+                    
+                }).catch(function(e){
+                    document.getElementById('dvdata').innerText = e;
+                    document.getElementById('tbody').innerHTML="";
+                    document.getElementById('thead').innerHTML="";
+                });
+            },false);
+
+            document.getElementById('deletedata').addEventListener('click',function(){
+                let response = deleteData(document.getElementById('getid').value);
+                response.then(function(resp){
+                    document.getElementById('dvdata').innerText = resp;
+                    document.getElementById('tbody').innerHTML="";
+                    document.getElementById('thead').innerHTML="";
+                    
+                }).catch(function(e){
+                    document.getElementById('dvdata').innerText = e;
+                    document.getElementById('tbody').innerHTML="";
+                    document.getElementById('thead').innerHTML="";
+                });
+            },false);
+
+            document.getElementById('postdata').addEventListener('click',function(){
+                let prod = {
+                    "ProductId":parseInt(document.getElementById('prodid').value), 
+                    "ProductName":document.getElementById('prodname').value, 
+                    "CategoryName":document.getElementById('prodcat').value, 
+                    "Price":parseInt(document.getElementById('prodprice').value)
+                };
+                let response = postData(prod);
+                response.then(function(resp){
+                    let prod=JSON.parse(resp);
+                   if(prod[0].ProductId===undefined){
+                        document.getElementById('dvdata').innerText = resp;
+                        document.getElementById('tbody').innerHTML="";
+                        document.getElementById('thead').innerHTML="";
+                   }
+                   else{
+                        setTable(prod);
+                        document.getElementById('dvdata').innerText = "";
+                   }
+                }).catch(function(e){
+                    document.getElementById('dvdata').innerText = e;
+                    document.getElementById('tbody').innerHTML="";
+                    document.getElementById('thead').innerHTML="";
+                });
+            },false);
+
+            document.getElementById('putdata').addEventListener('click',function(){
+                let prod = {
+                    "ProductId":parseInt(document.getElementById('prodid').value), 
+                    "ProductName":document.getElementById('prodname').value, 
+                    "CategoryName":document.getElementById('prodcat').value, 
+                    "Price":parseInt(document.getElementById('prodprice').value)
+                };
+                let response = putData(document.getElementById('prodid').value,prod);
+                response.then(function(resp){
+                    let prod=JSON.parse(resp);
+                   if(prod.ProductId===undefined){
+                        document.getElementById('dvdata').innerText = resp;
+                        document.getElementById('tbody').innerHTML="";
+                        document.getElementById('thead').innerHTML="";
+                   }
+                   else{
+                        setTable(prod);
+                        document.getElementById('dvdata').innerText = "";
+                   }
+                }).catch(function(e){
+                    document.getElementById('dvdata').innerText = e;
+                    document.getElementById('tbody').innerHTML="";
+                    document.getElementById('thead').innerHTML="";
+                });
+            },false);
+
+            document.getElementById('clr').addEventListener('click',function(){
+                let clearfields=document.getElementsByName('clearbtn');
+                for(let i=0;i<clearfields.length;i++){
+                    clearfields[i].value="";
+                }
+                let clearfields1=document.getElementsByName('clearbtn1');
+                for(let i=0;i<clearfields1.length;i++){
+                    clearfields1[i].innerHTML="";
+                }
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <h2 style="color:red;">Product CRUD Using API 07-09</h2>
+    <span id="user">
+        <center>
+            User-Name <input type="text" id="username"> <br> <br>
+            Password  <input type="text"  id="password"> <br> <br>
+            <input type="button" value="Submit" id='sbtbtn'> <br> <br>
+            <span id='val'></span> <br>
+            
+            
+        </center>
+    </span>
+    <hr>
+
+    <span id="crud" style="display:none;">
+        <center>
+            ProductId : <input type="text" id='getid' name='clearbtn'> <br> <br>
+            <input type="button" value="Ge Data" id='getdata'>
+            <input type="button" value="Delete Data" id='deletedata'> <br><br>
+            <table style="border:1px dashed black">
+                <thead id="thead" name='clearbtn1'>
+
+                </thead>
+                <tbody id='tbody' name='clearbtn1'>
+        
+                </tbody>
+           </table>
+            <div id='dvdata' name='clearbtn1'></div>
+        </center> 
+        <hr>
+        <center>   
+            ProductId : <input type="text" id='prodid' name='clearbtn'>
+            ProductName : <input type="text" id='prodname' name='clearbtn'>
+            CategoryName : <input type="text" id='prodcat' name='clearbtn'>
+            Price : <input type="text" id='prodprice' name='clearbtn'><br> <br>
+            <input type="button" value="Post Data" id='postdata'>
+            <input type="button" value="Put Data" id='putdata'> <br> <br>
+            <div id='postdata' name='clearbtn1'></div>
+        </center>    
+        <hr>
+        <center>
+            <input type="button" value="Clear" id='clr'>
+        </center>
+    </span>
+</body>
+</html>

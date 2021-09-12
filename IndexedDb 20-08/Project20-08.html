@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./Project20-08.js"></script>
+    <script>
+        var rowid=0;
+        
+        function del(id){
+            var mydb = window.indexedDB.open("newDB");
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    var tx = e.target.result.transaction("new", "readwrite");
+                    tbl = tx.objectStore("new");
+                    var deleter=tbl.delete("Prd-000"+id[1]);
+                    deleter.onsuccess=function(e){
+                        loaddata();
+                    }
+                }
+            } 
+            else{
+                document.getElementById('dvstatus').innerHTML = "Unable to Open database";
+            }           
+        }
+
+        function getr(id){
+            var mydb = window.indexedDB.open("newDB");
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    var tx = e.target.result.transaction("new", "readwrite");
+                    tbl = tx.objectStore("new");
+                    var updater=tbl.get("Prd-000"+id[1]);
+                    updater.onsuccess=function(e){
+                        document.getElementById('ProductId').value=updater.result.ProductId;
+                        document.getElementById('ProductName').value=updater.result.ProductName;
+                        document.getElementById('Price').value=updater.result.Price;
+                        document.getElementById('Manufacturer').value=updater.result.Manufacturer;
+                        document.getElementById('CategoryName').value=updater.result.CategoryName;
+                        document.getElementById('Description').value=updater.result.Description;
+                    }
+                }
+            } 
+            else{
+                document.getElementById('dvstatus').innerHTML = "Unable to Open database";
+            }
+        }
+
+        function update(id){
+            var mydb = window.indexedDB.open("newDB");
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    var tx = e.target.result.transaction("new", "readwrite");
+                    tbl = tx.objectStore("new");
+                    var updater=tbl.get("Prd-000"+id[1]);
+                    updater.onsuccess=function(e){
+                        console.log(updater);
+                        //data.ProductId=document.getElementById('ProductId').value;
+                        updater.result.ProductName=document.getElementById('ProductName').value;
+                        updater.result.Price=document.getElementById('Price').value;
+                        updater.result.Manufacturer=document.getElementById('Manufacturer').value;
+                        updater.result.CategoryName=document.getElementById('CategoryName').value;
+                        updater.result.Description=document.getElementById('Description').value;
+                        var requestUpdate = tbl.put(updater.result);
+                        requestUpdate.onerror = function(event) {
+                            document.getElementById('dvstatus').innerHTML = " Upload rejected";
+
+                        };
+                        requestUpdate.onsuccess = function(event) {
+                            document.getElementById('dvstatus').innerHTML = " Upload accepted";
+                            loaddata();
+                        };     
+                    }
+                }
+            } 
+            else{
+                document.getElementById('dvstatus').innerHTML = "Unable to Open database";
+            }    
+        }
+
+        function createDatabase(){
+            var mydb = window.indexedDB.open("newDB", 1);  
+            mydb.onupgradeneeded  = function(e){
+                var dbReference = e.target.result;
+                tbl = dbReference.createObjectStore("new", {keyPath: "ProductId"});
+                var columnConstraints = {unique:false};
+                tbl.createIndex("ProductRowId","ProductRowId",columnConstraints);
+                tbl.createIndex("ProductName","ProductName",columnConstraints);
+                tbl.createIndex("Price","Price",columnConstraints);
+                tbl.createIndex("Manufacturer","Manufacturer",columnConstraints);
+                tbl.createIndex("CategoryName","CategoryName",columnConstraints);
+                tbl.createIndex("Description","Description",columnConstraints);
+                document.getElementById('dvstatus').innerHTML = "Database is created and Objectstore is added in it";
+            };
+            mydb.onsuccess =function(e){
+                document.getElementById('dvstatus').innerHTML += " Database initial Operations are done";
+            }
+            mydb.onerror = function(e){
+                document.getElementById('dvstatus').innerHTML += " Database IS FAILED TO OPEN";
+            }
+        }
+
+        function saveData(){
+            var mydb = window.indexedDB.open("newDB");   
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    var tx = e.target.result.transaction("new", "readwrite");
+                    tbl = tx.objectStore("new");    
+                    var data = {
+                        "ProductRowId" :rowid,
+                        "ProductId"    :document.getElementById("ProductId").value,
+                        "ProductName"  :document.getElementById("ProductName").value,
+                        "Price"        :document.getElementById("Price").value,
+                        "Manufacturer" :document.getElementById("Manufacturer").value,
+                        "CategoryName" :document.getElementById("CategoryName").value,
+                        "Description"  :document.getElementById("Description").value,
+                    };
+                    var operation = tbl.add(data); 
+                    operation.onsuccess = function(e){
+                        console.log("In onsuccess");
+                        document.getElementById('dvstatus').innerHTML = "Record is added successfully";
+                    }
+                    operation.onerror = function(e){
+                        document.getElementById('dvstatus').innerHTML = "Save Operation is failed";
+                    }
+                }
+            }else{
+                document.getElementById('dvstatus').innerHTML = "Unable to Open database";
+            }
+        }
+
+        function loaddata(){
+            var records = [];  
+            var mydb = window.indexedDB.open("newDB");
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    var tx = e.target.result.transaction("new", "readwrite");
+                    tbl = tx.objectStore("new");  
+                    tbl.openCursor().onsuccess = function(e){
+                        var reader = e.target.result;
+                        if(reader){
+                            records.push(reader.value);
+                            reader.continue();
+                        } 
+                        else {
+                            var heads=[];
+                            var i,j;
+                            var tablehead="";
+                            for(i in records[0]){
+                                heads.push(i);
+                                tablehead+="<th>"+i+"</th>";   
+                            }
+                            var tablerow="";
+                            document.getElementById("thead").innerHTML=tablehead;
+                            for(i=0;i<records.length;i++){
+                                tablerow+="<tr>";
+                                for(j=0;j<heads.length;j++){
+                                    tablerow+="<td>"+records[i][heads[j]]+"</td>";  
+                                }
+                                tablerow+='<input type="button" value="Update" onclick="getr(this.id)" id="U'+records[i].ProductRowId+'">';
+                                tablerow+='<input type="button" value="Delete" onclick="del(this.id) "id="D'+records[i].ProductRowId+'">';
+                                tablerow+="</tr>";
+                            }
+                            if(i==0)rowid=1;
+                            else{
+                            rowid=records[i-1].ProductRowId+1;
+                            console.log("in loadData1 : "+rowid);}
+                            document.getElementById("tbody").innerHTML=tablerow;
+                            document.getElementById('ProductId').value="Prd-000"+rowid;
+                        }
+                        
+                    }
+                }
+            }
+            else {
+                document.getElementById('dvstatus').innerHTML = "Unable to Open database";
+            }
+        }
+        
+        function func(){
+            var x=document.getElementById("ProductName").value;
+            if(x.length==1){
+                document.getElementById("ProductName").value=x.toUpperCase();
+
+            }
+        }
+
+        function addrow(){
+            rowid=rowid+1;
+            document.getElementById('ProductId').value="Prd-000"+rowid;
+        }
+        
+        function clear(){
+            var inputs = document.getElementsByClassName('c');
+            for(var i=0;i<inputs.length;i++){
+                inputs[i].value = '';
+            } 
+        }
+
+        function getfromcat(category,value1){
+            var records = [];  
+            var mydb = window.indexedDB.open("newDB");
+            if(mydb){
+                mydb.onsuccess=function(e){
+                    var tx = e.target.result.transaction("new", "readwrite");
+                    tbl = tx.objectStore("new");  
+                    tbl.openCursor().onsuccess = function(e){
+                        var reader = e.target.result;
+                        if(reader){
+                            records.push(reader.value);
+                            reader.continue();
+                        } 
+                        else {
+                            var heads=[];
+                            var i,j;
+                            var tablehead="";
+                            for(i in records[0]){
+                                heads.push(i);
+                                tablehead+="<th>"+i+"</th>";   
+                            }
+                            var tablerow="";
+                            var check=0;
+                            
+                            for(i=0;i<records.length;i++){
+                                if(value1==records[i][category])
+                                {
+                                    check=1;
+                                    tablerow+="<tr>";
+                                    for(j=0;j<heads.length;j++){
+                                        tablerow+="<td>"+records[i][heads[j]]+"</td>";  
+                                    }
+                                    tablerow+="</tr>";
+                                }
+                            }
+                            if(check==1){
+                                document.getElementById("thead").innerHTML=tablehead;
+                                document.getElementById("tbody").innerHTML=tablerow;
+                            }
+                            else{
+                                document.getElementById("thead").innerHTML="";
+                                document.getElementById("tbody").innerHTML=""; 
+                                document.getElementById('ans').innerHTML="No Records Found";
+                            }    
+                        }
+                        
+                    }
+                }
+            }
+            else {
+                document.getElementById('dvstatus').innerHTML = "Unable to Open database";
+            }
+        }
+
+        function load(){
+            var ui=new UIGenerator();
+            var manu=["Intel","Logitech","Oneplus","TATA","IBM","HCL","Reliance","HP","Bajaj"];
+            var cate=["Electronics","Fashion","Pantry","Essentials"];
+            var filt=["ProductId","ProductName","Manufacturer","CategoryName","Price","Description"];
+            document.getElementById('Manufacturer').innerHTML=ui.generateDropDown(manu);
+            document.getElementById('CategoryName').innerHTML=ui.generateDropDown(cate);
+            document.getElementById('selectcat').innerHTML=ui.generateDropDown(filt);
+            createDatabase();
+            loaddata();
+            //console.log("In onload after loaddata:"+idb.rowid);
+            document.getElementById('Clear').addEventListener('click', clear, false);
+            document.getElementById('SaveData').addEventListener('click', function(){
+                saveData();
+                loaddata();
+            },false);
+            document.getElementById('UpdateData').addEventListener('click', function(){
+                var send=document.getElementById('ProductId').value;
+                var t="U"+send.slice(7);
+                update(t);
+            },false);
+            document.getElementById('ReadData').addEventListener('click', loaddata,false);
+            document.getElementById('searchrecord').addEventListener('click',function(){
+                var category=document.getElementById('selectcat').value;
+                var value1=document.getElementById('getrecord').value;
+                getfromcat(category,value1);
+
+            },false);
+         }
+        
+        window.onload=load;
+    </script>
+</head>
+<body>
+    <h3>Project 1 20-08-2021</h3>
+    <div>
+        ProductId: <input readonly type="text" id="ProductId">
+        ProductName: <input type="text" onkeyup='func()' id="ProductName" class="c">
+        Price: <input type="number" min="0" id="Price" class="c">
+        Manufacturer: <select id="Manufacturer" class="c">
+        </select>    
+        CategoryName: <select id="CategoryName" class="c">
+        </select>
+        <br>
+        Description: <input type="text" id="Description" class="c">
+        <br>
+        <input type="button" value="Clear" id="Clear">
+        <input type="button" value="Save Data" id="SaveData">
+        <input type="button" value="Read all Data" id="ReadData">
+        <input type="button" value="Update Data" id="UpdateData">
+    </div>
+    <div id='dvstatus'></div>
+    <br>
+    <div>
+         Filter Table <select id="selectcat" class="c">
+        </select>
+        <input type="text" id="getrecord" class="c">
+        <input type="button" value="Search" id="searchrecord">
+    </div>
+    <div id='ans'></div>
+    <table>
+        <thead id="thead"> 
+        
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</body>
+</html>

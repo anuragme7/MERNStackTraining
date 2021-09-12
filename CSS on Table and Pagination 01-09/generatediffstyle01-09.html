@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script>
+       
+        window.onload=function(){
+            let emp=document.getElementsByName('emp');
+            for(let i=0;i<emp.length;i++){
+                let salary=parseInt(emp[i].lastElementChild.innerText);
+                if(salary>=200000){
+                    emp[i].className="table-danger";
+                }
+                if(salary>=150000&&salary<200000){
+                    emp[i].className="table-success";
+                }
+                if(salary<150000){
+                    emp[i].className="table-light";
+                }
+            }
+        }            
+    </script>
+</head>
+<body>
+    <h3>Table Styles 01-09</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <th>EmpNo</th>
+                    <th>EmpName</th>
+                    <th>DeptName</th>
+                    <th>Salary</th>
+                </tr>    
+            </thead>
+            <tbody>
+                <tr class="" name="emp">
+                    <td>101</td>
+                    <td>Anurag</td>
+                    <td>DS</td>
+                    <td>250000</td>
+                </tr>
+                <tr class="" name="emp">
+                    <td>102</td>
+                    <td>Arun</td>
+                    <td>DCC</td>
+                    <td>180000</td>
+                </tr>
+                <tr class="" name="emp">
+                    <td>103</td>
+                    <td>Dhawla</td>
+                    <td>DAI</td>
+                    <td>140000</td>
+                </tr>
+                <tr class="" name="emp">
+                    <td>104</td>
+                    <td>Hardik</td>
+                    <td>DS</td>
+                    <td>230000</td>
+                </tr>
+                <tr class="" name="emp">
+                    <td>105</td>
+                    <td>Harsh</td>
+                    <td>DCC</td>
+                    <td>190000</td>
+                </tr>
+                <tr class="" name="emp">
+                    <td>106</td>
+                    <td>Nayan</td>
+                    <td>DAI</td>
+                    <td>185000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+</body>
+</html>

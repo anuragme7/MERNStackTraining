@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="./addlogic.js"></script>
+</head>
+<body>
+    <div>
+        <input type="button" style="float:right;" value="Log Out" id='logout'> 
+        <h5 id="logged" style="float:right; margin-right: 10px;"></h5><br>
+        <h3>Add a Product</h3><br>  <br>
+    </div> 
+    <center>
+        ProductId : <input type="text" name="clr" id="prodid"> <br> <br>
+        ProductName : <input type="text" name="clr" id="prodname"> <br> <br>
+        CategoryName : <input type="text" name="clr" id="prodcat"> <br> <br>
+        Manufacturer : <input type="text" name="clr" id="prodman"> <br> <br>
+        Description : <input type="text" name="clr" id="proddes"> <br> <br>
+        Price : <input type="number" min="0" name="clr" id="prodprice"> <br> <br>
+        <input type="button" value="Submit" id='sbtbtn'>
+        <input type="button" value="Clear" id='clrbtn'>
+        <input type="button" value="See All Products" id='prod'>
+        <div id='msg'></div>
+    </center>
+    <a style="display:none;" href="/Products" id="Products"></a>
+    <a style="display:none;" href="/Logout" id="Logoutbtn"></a>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./checkboxCourses.js"></script>
+    <script>
+        var Courses1=[
+                {courseid:101,coursename:"C++",Fees:10000},
+                {courseid:102,coursename:"Java",Fees:10500},
+                {courseid:103,coursename:"C#",Fees:11000},
+                {courseid:104,coursename:"Angular",Fees:15000},
+                {courseid:105,coursename:".NET",Fees:9000},
+                {courseid:106,coursename:"JSP",Fees:8000},
+                {courseid:107,coursename:"Nodejs",Fees:14000},
+                {courseid:108,coursename:"React",Fees:19000}
+            ];
+        window.onload = function(){
+            
+            var i=0;
+            var putc='';
+            for(i=0;i<Courses1.length;i++){
+                putc+='<input type="checkbox" name="courses" onclick="getF(Courses1)" value="'+Courses1[i]["coursename"]+'">'+Courses1[i]["coursename"];
+            }
+            document.getElementById("putCourses").innerHTML=putc;
+        }
+    </script>
+</head>
+<body>
+    <h1>Checkbox Assignment</h1>
+    <br/>
+    <br/>
+    Select Courses you want to enroll into
+    <div id = "putCourses">
+    </div>
+     <!-- <input type="button" value="Submit" id="sbtbtn"> -->
+    <div id="output">
+    </div>
+    
+</body>
+</html>

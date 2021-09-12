@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./generator30-08.js"></script>
+    <script>
+        window.onload=function(){
+            document.getElementById('PatientId').value=parseInt(Patients[Patients.length-1].PatientID)+1;
+            document.getElementById('sbtbtn').addEventListener('click',function(){
+                let send= {PatientID:parseInt(document.getElementById('PatientId').value),
+                PatientName:document.getElementById('PatientName').value,
+                Ward:document.getElementById('Ward').value};
+                setdata(send);
+                
+            },false);
+            document.getElementById('clrbtn').addEventListener('click',function(){
+                let clr=document.getElementsByName('patient');
+                for(let i=0;i<clr.length;i++){
+                    clr[i].value="";
+                }
+                document.getElementById('out').innerHTML="";
+                
+            },false);
+            document.getElementById('grpbtn').addEventListener('click',function(){
+                getdata();
+                
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <h1 style="color:blueviolet">Generator 30-08</h1>
+    <center>
+        PatientId : <input type="text" id="PatientId"><br><br>
+        PatientName : <input type="text" name="patient" id="PatientName"><br><br>
+        Ward : <select name="patient" id="Ward">
+            <option disabled selected hidden value=""></option>
+            <option value="General">General</option>
+            <option value="Special">Special</option>
+        </select><br><br>
+        <input type="button" value="Submit" id="sbtbtn">
+        <input type="button" value="Clear" id="clrbtn">
+        <input type="button" value="Group by General Ward" id="grpbtn">
+        <div id="out"></div>
+    </center>
+</body>
+</html>

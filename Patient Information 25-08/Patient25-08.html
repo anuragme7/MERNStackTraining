@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="./generatedropdown.build.js"></script>
+<script src="./patientoperations.build.js"></script>
+<script src="./checkValidity.build.js"></script>
+<script>
+    window.onload=function(){
+        //Setting the dropdowns from generatedropdown.build.js
+        let ui=new UIGenerator();
+        let gender=["Male","Female","Others"];
+        document.getElementById('gender').innerHTML=ui.generateDropDown(gender);
+        let disease=["General","Sugar","Arthritis","COVID-19","Common-Cold","Fever","Cough","Cancer"];
+        document.getElementById('disease').innerHTML=ui.generateDropDown(disease);
+        let ward=["General","Special"];
+        document.getElementById('ward').innerHTML=ui.generateDropDown(ward);
+        //Setting Patient id using patientoperations.build.js
+        let patop=new patientOP();
+        patop.setPatientId();
+        //Code for Submit onclick event
+        document.getElementById('sbtbtn').addEventListener('click',function(){
+            let cv=new checkValid();
+            if(cv.check()){//Checking if the data entered is valid or not using checkValidity.build.js
+                //console.log(document.getElementById('PatientId').value);
+                patop.saveData();//Saving data using patientoperations.build.js
+                document.getElementById('out').innerHTML="Record Saved";
+            }
+            else{
+            document.getElementById('out').innerHTML="Enter valid data";//Showing error message
+            }
+        },false);
+        
+        document.getElementById('clear').addEventListener('click',function(){
+            let clearform=document.getElementsByName("form");
+            for(let i=0;i<clearform.length;i++){
+                clearform[i].value="";//Clearing value from the elements
+                clearform[i].style="";//Clearing styles from the input elements
+            }
+            let clearrad=document.getElementsByName("cat");
+            for(let j=0;j<clearrad.length;j++){
+                console.log(clearrad[j]);
+                clearrad[j].checked=false;
+            }
+            document.getElementById("out").innerHTML="";
+        },false);
+
+        let rad=document.getElementsByName("cat");
+        for(let j=0;j<rad.length;j++){
+            rad[j].addEventListener('click',function(){
+                if(rad[j].id=="doctorscate"){
+                    patop.getRecords("DoctorName");
+                }
+                if(rad[j].id=="diseasecate"){
+                    patop.getRecords("Disease");
+                }
+                if(rad[j].id=="wardscate"){
+                    patop.getRecords("Ward");
+                }
+            },false);
+        }
+    }
+</script>
+<body>
+    <h1 style="color:green">Patient Information</h1>
+    <center>
+        <span>
+            PatientId <input readonly type="text" id="PatientId" ><br><br>
+            PatientName <input type="text" name="form" id="PatientName" pattern="[A-Za-z]{0,}" required><br><br>
+            DoctorName <input type="text" name="form" id="DoctorName" pattern="[A-Za-z]{0,}" required><br><br>
+            Age <input type="number" name="form" id="Age" min="1" required><br><br>
+            Gender <select id='gender' name="form" required></select><br><br>
+            Disease <select id='disease' name="form" required></select>
+            <br><br>
+            Ward <select id='ward' name="form" required></select><br><br>
+            <input type="button" id="sbtbtn" value="Submit">
+            <input type="button" id="clear" value="Clear">
+            <br><br>
+            
+            <div id="out"></div><br>
+            Select Category : <input type="radio" name="cat" id="doctorscate">Doctors
+            <input type="radio" name="cat" id="diseasecate">Disease
+            <input type="radio" name="cat" id="wardscate">Wards
+        </span>
+    </center>
+</body>
+</html>

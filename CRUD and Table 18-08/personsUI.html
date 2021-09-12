@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./personsJS.js"></script>
+    <script>
+        window.onload = function(){
+            var outtab=[]; 
+            var sbtbtn=document.getElementById('sbtbtn');
+            sbtbtn.addEventListener('click',function(){
+                var addtoTable={PerosnID:0,PerosnName:'',City:'',Gender:''};
+                document.getElementById('success').innerHTML="Record Uploaded.";
+                addtoTable.PerosnID=document.getElementById('PersonID').value;
+                addtoTable.PerosnName=document.getElementById('PersonName').value;
+                addtoTable.City=document.getElementById('City').value;
+                addtoTable.Gender=document.getElementById('Gender').value;
+                outtab.push(addtoTable);
+                document.getElementById('tbody').innerHTML = showTable(outtab);
+                clear();
+            },false);
+            var clrbtn=document.getElementById('clrbtn');
+            clrbtn.addEventListener('click',function(){
+                clear();
+            },false);           
+        }
+    </script>
+</head>
+<body>
+    <h1>Add Persons in the table Dynamically Assignment</h1>
+    Perosn-ID<input type="text" id="PersonID"><br><br>
+    Perosn-Name<input type="text" id="PersonName"><br><br>
+    City<input type="text" id="City"><br><br>
+    Gender<select id="Gender">
+            <option disabled selected hidden></option>
+            <option value="M">M</option>
+            <option value="F">F</option>
+            <option value="Others">Others</option>
+    </select>
+    <br><br>
+    <input type="button" value="Submit" id='sbtbtn'>
+    <input type="button" value="Clear" id='clrbtn'>
+    <div id='success'></div>
+    <table>
+        <thead id="thead"> 
+        
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</body>
+</html>

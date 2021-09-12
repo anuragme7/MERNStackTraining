@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var output=[
+            {id:101,name:"Anurag",Gender:'M'},
+            {id:102,name:"Arun",Gender:'M'},
+            {id:103,name:"Dhawla",Gender:'F'},
+            {id:104,name:"Hardik",Gender:'M'},
+            {id:105,name:"Harsh",Gender:'M'},
+        ];
+        window.onload=function(){
+            var heads=[];
+            var i,j;
+            var tablehead="";
+            for(i in output[0]){
+                 heads.push(i);
+                 tablehead+="<th>"+i+"</th>";   
+            }
+            var tablerow="";
+            document.getElementById("thead").innerHTML=tablehead;
+            for(i=0;i<output.length;i++){
+                tablerow+="<tr>";
+                for(j=0;j<heads.length;j++){
+                    tablerow+="<td>"+output[i][heads[j]]+"</td>";
+                }
+                tablerow+="</tr>";
+            }
+            document.getElementById("tbody").innerHTML=tablerow;
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <thead id="thead">
+
+        </thead>
+        <tbody id='tbody'>
+
+        </tbody>
+    </table>
+</body>
+</html>

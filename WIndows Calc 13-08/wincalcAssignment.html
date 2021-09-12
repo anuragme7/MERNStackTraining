@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>  
+            function printval(val){
+                document.getElementById("result").value+=val;
+                
+            }
+
+            function solve(){
+                let x = document.getElementById("result").value;
+                let y = eval(x);
+                document.getElementById("result").value = y;
+            }
+            
+            function clrresult(){
+                document.getElementById("result").value = "";
+            }
+        
+            function sqr(){
+                let x=document.getElementById("result").value;
+                let y= Math.pow(x,2);
+                document.getElementById("result").value = y;
+            }
+        
+            function sqrroot(){
+                let x=document.getElementById("result").value;
+                let y= Math.pow(x,(1/2));
+                document.getElementById("result").value = y;
+            }
+        
+            function onebyx(){
+                let x=document.getElementById("result").value;
+                let y= 1/x;
+                document.getElementById("result").value = y;
+            }  
+     
+        
+     </script>
+</head>
+<body>
+    <h2>Windows Calculator</h2>
+         
+    <input type="text" id="result">
+    <input type="button" value="C" onclick="clrresult()"><br>
+
+
+    <input type="button" value="1" onclick="printval('1')"> 
+    <input type="button" value="2" onclick="printval('2')"> 
+    <input type="button" value="3" onclick="printval('3')"> 
+    <input type="button" value="/" onclick="printval('/')"> <br>
+
+
+    <input type="button" value="4" onclick="printval('4')"> 
+    <input type="button" value="5" onclick="printval('5')"> 
+    <input type="button" value="6" onclick="printval('6')"> 
+    <input type="button" value="-" onclick="printval('-')"> <br>
+
+
+    <input type="button" value="7" onclick="printval('7')"> 
+    <input type="button" value="8" onclick="printval('8')"> 
+    <input type="button" value="9" onclick="printval('9')"> 
+    <input type="button" value="+" onclick="printval('+')"> <br>
+
+
+    <input type="button" value="." onclick="printval('.')"> 
+    <input type="button" value="0" onclick="printval('0')"> 
+    <input type="button" value="=" onclick="solve()"> 
+    <input type="button" value="*" onclick="printval('*')"> <br>
+
+
+    <input type="button" value="x^2" onclick="sqr()"> 
+    <input type="button" value="x^(1/2)" onclick="sqrroot()"> 
+    <input type="button" value="1/x" onclick="onebyx()"> <br>
+         
+    
+</body>
+</html>

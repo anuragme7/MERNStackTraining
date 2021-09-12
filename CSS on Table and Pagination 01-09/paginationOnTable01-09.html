@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script>
+        var products = [
+                {ProductId:101, ProductName:"Lenovo ThinkPad", CategoryName:"Electronics", Price:49999},
+                {ProductId:102, ProductName:"Sony 16MP Camera", CategoryName:"Electronics", Price:4999},
+                {ProductId:103, ProductName:"OnePlus 8 Pro", CategoryName:"Electronics", Price:54999},
+                {ProductId:104, ProductName:"Logitech Mouse", CategoryName:"Electronics", Price:999},
+                {ProductId:105, ProductName:"Sony Headphones", CategoryName:"Electronics", Price:3999},
+                {ProductId:106, ProductName:"Nike Track-suit", CategoryName:"Fashion", Price:1499},
+                {ProductId:107, ProductName:"Raymond Shirt", CategoryName:"Fashion", Price:1049},
+                {ProductId:108, ProductName:"Max Shirt", CategoryName:"Fashion", Price:799},
+                {ProductId:109, ProductName:"Max T-shirt", CategoryName:"Fashion", Price:699},
+                {ProductId:110, ProductName:"U.S. POLO Jeans", CategoryName:"Fashion", Price:2999},
+                {ProductId:111, ProductName:"Oximeter", CategoryName:"Essentials", Price:1999},
+                {ProductId:112, ProductName:"Thermometer", CategoryName:"Essentials", Price:599},
+                {ProductId:113, ProductName:"Blood Pressure Machine", CategoryName:"Essentials", Price:1299},
+                {ProductId:114, ProductName:"IR Thermometer", CategoryName:"Essentials", Price:1399},
+                {ProductId:115, ProductName:"Glucometer", CategoryName:"Essentials", Price:899},
+                {ProductId:116, ProductName:"Green Tea", CategoryName:"Pantry", Price:399},
+                {ProductId:117, ProductName:"Saffola Oats", CategoryName:"Pantry", Price:159},
+                {ProductId:118, ProductName:"Peanut Butter", CategoryName:"Pantry", Price:349},
+                {ProductId:119, ProductName:"Glucon D", CategoryName:"Pantry", Price:299},
+                {ProductId:120, ProductName:"Basmati Rice", CategoryName:"Pantry", Price:399}
+            ];
+        function func(id){
+            id=parseInt(id);
+            let start;
+            let table1='<table class="table table-bordered table-striped table-hover"><thead><tr class="table-dark"><th>ProductId</th><th>ProductName</th><th>CategoryName</th><th>Price</th></tr></thead><tbody id="tbody"></tbody>';
+            document.getElementById('tab').innerHTML=table1;
+            let table="";
+            for(start=(id-1)*5;start<=(id*5)-1;start++){
+                table=`${table}<tr>`;
+                for(let p in products[0]){
+                    console.log(products[start][p]);
+                    table=`${table}<td>${products[start][p]}</td>`;
+                }
+                table=`${table}</tr>`;
+            }
+            document.getElementById('tbody').innerHTML=table;
+        }
+        window.onload=function(){  
+            let totalpages=products.length/5;      
+            let out=`<ul class="pagination justify-content-center">`;
+            for(let i=1;i<=totalpages;i++){
+                out=`${out}<li class="page-item"><a class="page-link" id="${i}" onclick="func(this.id)">
+                    ${i}</a></li>`;
+            }    
+            out=`${out}</ul>`;
+            document.getElementById('paging').innerHTML=out;  
+            func(1);
+        }
+    </script>
+</head>
+<body>
+    <h3>Pagination on Table 01-09</h3>
+    <div class="table-responsive" id="tab">
+
+    </div>   
+   <div id="paging">
+       
+   </div>
+</body>
+</html>

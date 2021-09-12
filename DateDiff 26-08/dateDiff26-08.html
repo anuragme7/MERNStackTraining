@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./dateDiff26-08.build.js"></script>
+    <script>
+        window.onload=function(){
+            document.getElementById('sbt').addEventListener('click',function(){
+                let obj=new dateop();
+                obj.getans();
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <h1 style="color:brown">Date DIfference</h1>
+    <center>
+        <div>
+            From Date :
+                <input type="date" id='d1'>
+                <br>
+            From Time:
+                <input type="time" id='t1'>    
+        </div>
+        <hr>
+        <div>
+            To Date :
+                <input type="date" id='d2'>
+                <br>
+            To Time:
+                <input type="time" id='t2'>    
+        </div>
+        <hr>
+        <input type="button" value="Get Difference" id='sbt'>
+        <div id="ans"></div>
+    </center>
+</body>
+</html>

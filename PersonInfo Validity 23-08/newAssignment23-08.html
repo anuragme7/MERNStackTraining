@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .r{
+            color:red
+        }
+    </style>
+    <script>
+
+            function check(){
+                var classc=document.getElementsByClassName("c");
+                var r=true,s=false;
+                var i;
+                for(i=0;i<classc.length;i++){
+                    if(classc[i].value.length==0) r=false;
+                }
+                //console.log("R "+r);
+                var rad=document.getElementsByName("cat");
+                for(i=0;i<rad.length;i++){
+                    if(rad[i].checked){ 
+                        s=true;
+                        break;
+                    }    
+                }
+                //console.log("S "+s);
+                var t=document.getElementById('btnsubmit');
+                if(r&&s) t.disabled=false;
+            }
+            window.onload=function(){
+                var btnsubmit=document.getElementById('btnsubmit');
+                btnsubmit.addEventListener("click",function(){
+                    var c=document.getElementsByClassName("c");
+                    for(var i=0;i<c.length;i++){
+                        if(c[i].checkValidity()){
+                            c[i].style.border="2px solid green";
+                        }
+                        else{
+                            c[i].style.border="2px solid red";
+                            if(c[i].id=='firstname'){ 
+                                document.getElementById("fn").innerHTML="First-Name should only contain alphabets.";
+                            }
+                            if(c[i].id=='midname'){ 
+                                document.getElementById("mn").innerHTML="Middle-Name should only contain alphabets.";
+                            }
+                            if(c[i].id=='lastname'){ 
+                                document.getElementById("ln").innerHTML="Last-Name should only contain alphabets.";
+                            }
+                            if(c[i].id=='age'){
+                                document.getElementById("ag").innerHTML="Age must be between 18-99.";
+                            }
+                            if(c[i].id=='email'){
+                                document.getElementById("em").innerHTML="The standard email pattern must be followed.";
+                            }
+                            if(c[i].id=='phoneno2'){
+                                document.getElementById("p2").innerHTML="STD code can only have 2-5 digits.";
+                            }
+                            if(c[i].id=='phoneno3'){
+                                document.getElementById("p3").innerHTML="Phone no can have upto 12 digits.";
+                            }
+                            if(c[i].id=='mobno2'){
+                                document.getElementById("m3").innerHTML="A mobile number must contain 10 digits.";
+                            }                      
+                        }
+                    }
+                },false);
+            }
+
+    </script>
+</head>
+<body>
+    <div>
+        <span class='r'>*</span> is for mandatory fields.
+        <br><br>
+        <form name="frmdata">
+            <div>
+                First Name: <span class='r'>*</span> <input type="text" id="firstname" name="fname" onkeyup="check()"
+                 required placeholder="Enter First name" pattern="[A-Za-z]{0,}" class="c">
+                 <span id="fn"></span>
+            </div>
+            
+            <br>
+            <div>
+                Middle Name: <span class='r'>*</span>  <input type="text" id="midname" name="mname" onkeyup="check()"
+                 required placeholder="Enter Middle name" pattern="[A-Za-z]{0,}" class="c">
+                 <span id="mn"></span>
+            </div>
+            <br>
+            <div>
+                Last Name: <span class='r'>*</span>  <input type="text" id="lastname" name="lname" onkeyup="check()"
+                 required placeholder="Enter Last name" pattern="[A-Za-z]{0,}" class="c">
+                 <span id="ln"></span>
+            </div>
+            
+            <br>
+            <div>
+               Age: <span class='r'>*</span>  <input type="number" id="age" name="page" min="18" max="99" required onkeyup="check()" class="c">
+               <span id='ag'></span>
+            </div>
+            <br>
+            <div>
+                Email: <span class='r'>*</span>  <input type="email" required id="email" name="pemail"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="c" onkeyup="check()">
+                <span id="em"></span>
+                <br>
+            </div>
+            <br>
+            <div>
+                Phone no: <span class='r'>*</span> <input readonly type="text" size="1" required id="phoneno1" name="pphoneno1"  value="+(91)">
+                -<input type="number" required name="pphoneno2" id="phoneno2" min="10" max="99999" onkeyup="check()" class="c">
+                <span id="p2"></span>
+                -<input type="number" required name="pphoneno3" id="phoneno3" min="0" max="999999999999" onkeyup="check()" class="c">
+                <span id="p3"></span>
+            </div>
+            <br>
+            <div>
+                Mobile no: <span class='r'>*</span>  <input readonly type="text" size="1" required id="mobno1" name="pmobno1" value="+(91)">
+                -<input type="number" required name="pmobno2" id="mobno2" min="1000000000" max="9999999999" onkeyup="check()" class="c">
+                <span id="m3"></span>
+            </div>
+            <br>
+            <div>
+                Gender: <span class='r'>*</span>  <input type="radio" onclick="check()" name="cat" id="M">Male
+                <input type="radio" name="cat" onclick="check()" id="F">Female
+                <input type="radio" name="cat" onclick="check()" id="O">Others
+            </div>
+            <br>
+            <div>
+                <input type="submit" disabled="disabled" id="btnsubmit" value="Save">
+            </div>
+        </form>
+    </div>    
+</body>
+</html>

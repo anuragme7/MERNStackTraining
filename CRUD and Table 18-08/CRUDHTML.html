@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./CRUDJS.js"></script>
+    <script>
+        var Persons=[];
+        window.onload = function(){
+            
+            var crudcall=new crud();
+            var sbtbtn=document.getElementById('sbtbtn');
+            sbtbtn.addEventListener('click',function(){
+                Persons.push(crudcall.create(''));
+                crudcall.clear();
+                document.getElementById('out').innerHTML="Record Uploaded.";
+                crudcall.readall(Persons,'','');
+            },false);
+
+            var readall=document.getElementById('readall');
+            readall.addEventListener('click',function(){
+                if(Persons.length==0){ 
+                    document.getElementById('out1').innerHTML="No records available";
+                }    
+                else{
+                    crudcall.readall(Persons,'','');
+                }
+            },false);
+
+            var readall3=document.getElementById('readall3');
+            readall3.addEventListener('click',function(){
+                var z=document.getElementById('criteriagenderandcity1').value;
+                var yz=document.getElementById('criteriagendercity2').value;
+                if(Persons.length==0){ 
+                    document.getElementById('out1').innerHTML="No records available";
+                }    
+                else{
+                if(z.length==0||yz.length==0) crudcall.readall(Persons,'','');
+                else crudcall.readall(Persons,z,yz);}
+                document.getElementById('criteriagenderandcity1').value="";
+                document.getElementById('criteriagendercity2').value="";
+            },false);
+
+            var readID=document.getElementById('readID');
+            readID.addEventListener('click',function(){
+                crudcall.readid(Persons);
+                document.getElementById('searchID').value="";
+            },false);
+
+            var searchID3=document.getElementById('searchID3');
+            searchID3.addEventListener('click',function(){
+                if(crudcall.getdata(Persons,document.getElementById('PersonID').value)){
+                    document.getElementById('out').innerHTML="Record Found. Add new details for the record";
+                }
+                else{
+                    document.getElementById('out').innerHTML="No";
+                }
+            },false);
+
+            var updated=document.getElementById('updated');
+            updated.addEventListener('click',function(){
+                crudcall.deleteid(Persons,document.getElementById('PersonID').value);
+                Persons.push(crudcall.create());
+                document.getElementById('out').innerHTML="Record Updated.";
+                crudcall.readall(Persons,'','');
+                crudcall.clear();
+            },false);
+
+            var clear=document.getElementById('clear');
+            clear.addEventListener('click',function(){
+                crudcall.clear();
+            },false);
+
+            var deleteID=document.getElementById('deleteID');
+            deleteID.addEventListener('click',function(){
+                if(crudcall.deleteid(document.getElementById('searchID1').value)){
+                    document.getElementById('out3').innerHTML="Record Deleted, Check Read All.";
+                    crudcall.readall(Persons,'','');
+                }
+                else{
+                    document.getElementById('out3').innerHTML="No records Found";
+                }
+                document.getElementById('searchID1').value="";
+            },false);
+            
+        }
+    </script>
+</head>
+<body>
+    <h1>CRUD Assignment</h1>
+
+    <h3>Create Record</h3>
+    Perosn-ID<input type="text" id="PersonID">
+    Perosn-Name<input type="text" id="PersonName">
+    City<input type="text" id="City">
+    Age<input type="text" id="Age">
+    Gender<select id="Gender">
+        <option disabled selected hidden></option>
+        <option value="M">M</option>
+        <option value="F">F</option>
+        <option value="Others">Others</option>
+    <input type="button" value="Create new Record" id='sbtbtn'><br>
+    <input type="button" value="Clear" id='clear'>
+    <input type="button" value="Get Data" id='searchID3'>
+    <input type="button" value="Update Record" id='updated'>
+    <div id='out'></div>
+
+    <h3>Read all records</h3>
+    <input type="button" value="Read all Records" id='readall'>
+    <div id='out1'></div>
+    <table>
+        <thead id="thead"> 
+        
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+
+    <h3>Read with criteria</h3>
+    Gender<select id="criteriagenderandcity1">
+        <option disabled selected hidden></option>
+        <option value="M">M</option>
+        <option value="F">F</option>
+        <option value="Others">Others</option></select>
+    City<input type="text" id="criteriagendercity2">
+    <input type="button" value="Read with Gender and City" id='readall3'>
+    <div id="out8"></div>
+
+    Person-ID<input type="text" id="searchID">
+    <input type="button" value="Read with ID" id='readID'>
+    <div id='out2'></div>
+
+    <h3>Delete with Id</h3>
+    Person-ID<input type="text" id="searchID1">
+    <input type="button" value="Delete with ID" id='deleteID'>
+    <div id='out3'></div><br>
+
+</body>
+</html>

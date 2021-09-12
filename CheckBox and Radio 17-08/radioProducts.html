@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var products = [
+                {ProductId:101, ProductName:"Lenovo ThinkPad", CategoryName:"Electronics", Price:49999},
+                {ProductId:102, ProductName:"Sony 16MP Camera", CategoryName:"Electronics", Price:4999},
+                {ProductId:103, ProductName:"OnePlus 8 Pro", CategoryName:"Electronics", Price:54999},
+                {ProductId:104, ProductName:"Logitech Mouse", CategoryName:"Electronics", Price:999},
+                {ProductId:105, ProductName:"Sony Headphones", CategoryName:"Electronics", Price:3999},
+                {ProductId:106, ProductName:"Nike Track-suit", CategoryName:"Fashion", Price:1499},
+                {ProductId:107, ProductName:"Raymond Shirt", CategoryName:"Fashion", Price:1049},
+                {ProductId:108, ProductName:"Max Shirt", CategoryName:"Fashion", Price:799},
+                {ProductId:109, ProductName:"Max T-shirt", CategoryName:"Fashion", Price:699},
+                {ProductId:110, ProductName:"U.S. POLO Jeans", CategoryName:"Fashion", Price:2999},
+                {ProductId:111, ProductName:"Oximeter", CategoryName:"Essentials", Price:1999},
+                {ProductId:112, ProductName:"Thermometer", CategoryName:"Essentials", Price:599},
+                {ProductId:113, ProductName:"Blood Pressure Machine", CategoryName:"Essentials", Price:1299},
+                {ProductId:114, ProductName:"IR Thermometer", CategoryName:"Essentials", Price:1399},
+                {ProductId:115, ProductName:"Glucometer", CategoryName:"Essentials", Price:899},
+                {ProductId:116, ProductName:"Green Tea", CategoryName:"Pantry", Price:399},
+                {ProductId:117, ProductName:"Saffola Oats", CategoryName:"Pantry", Price:159},
+                {ProductId:118, ProductName:"Peanut Butter", CategoryName:"Pantry", Price:349},
+                {ProductId:119, ProductName:"Glucon D", CategoryName:"Pantry", Price:299},
+                {ProductId:120, ProductName:"Basmati Rice", CategoryName:"Pantry", Price:399}
+            ];
+        
+        function gettable(id){
+            var heads=[];
+            var i,j;
+            var tablehead="";
+            for(i in products[0]){
+                 heads.push(i);
+                 tablehead+="<th>"+i+"</th>";   
+            }
+            var tablerow="";
+            document.getElementById("thead").innerHTML=tablehead;
+            for(i=0;i<products.length;i++){
+                if(id==products[i].CategoryName)
+                {
+                    tablerow+="<tr>";
+                    for(j=0;j<heads.length;j++){
+                        
+                        tablerow+="<td>"+products[i][heads[j]]+"</td>";
+                    }
+                    tablerow+="</tr>";
+                }
+            }
+            document.getElementById("tbody").innerHTML=tablerow;
+        }    
+        window.onload = function(){
+            var category=[
+                'Electronics','Fashion','Essentials','Pantry'
+            ];
+            var putcat='';
+            for(var i=0;i<category.length;i++){
+                putcat+='<input type="radio" name="catg" onclick="gettable(this.id)" id="'+category[i]+'" value="'+category[i]+'">'+category[i];
+            }
+            document.getElementById('cat').innerHTML=putcat;
+            var heads=[];
+            var i,j;
+            var tablehead="";
+            for(i in products[0]){
+                 heads.push(i);
+                 tablehead+="<th>"+i+"</th>";   
+            }
+            var tablerow="";
+            document.getElementById("thead").innerHTML=tablehead;
+            for(i=0;i<products.length;i++){
+                tablerow+="<tr>";
+                for(j=0;j<heads.length;j++){
+                    tablerow+="<td>"+products[i][heads[j]]+"</td>";
+                }
+                tablerow+="</tr>";
+            }
+            document.getElementById("tbody").innerHTML=tablerow;  
+        }
+    </script>
+</head>
+<body>
+    <h1>Radio Assignment</h1>
+    <h3>Select a Category</h3>
+    <div id="cat">
+    </div>
+    <h3>Product Available</h3>
+    <table>
+        <thead id="thead"> 
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</body>
+</html>

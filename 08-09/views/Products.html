@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="./productslogic.js"></script>
+</head>
+<body>
+    <div>
+        <input type="button" style="float:right;" value="Log Out" id='logout'> 
+        <h5 id="logged" style="float:right; margin-right: 10px;"></h5><br>
+    </div>    
+    <h3>Available Products</h3>
+    <center>
+        <h6>Search By ProductId : <input type="text" id="searchid"> 
+        <input type="button" value="Search" id='searchbtn'></h6><br>
+        <input type="button" value="Add Product" id='addpro'><br><br>
+        <div id="prod" class="table-responsive"></div>
+        <div id='msg'></div>
+    </center>
+    <a style="display:none;" href="/Logout" id="Logoutbtn"></a>
+    <a style="display:none;" href="/AddProduct" id="addproduct"></a>
+    <a style="display:none;" href="/UpdateProduct" id="updproduct"></a>
+</body>
+</html>

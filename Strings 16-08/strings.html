@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jsstrings.js"></script>
+    <script>
+        window.onload = function(){
+            var out = document.getElementById('out')
+            document.getElementById('out').innerHTML=str
+            var changeCasebtn = document.getElementById('changeCasebtn');
+            changeCasebtn.addEventListener('click', function(){
+               var c = document.getElementById('in1').value;   
+               var out = changeCase(c);
+               document.getElementById('out2').innerHTML = out;
+            },false);
+            var lenbtn = document.getElementById('lenbtn');
+            lenbtn.addEventListener('click', function(){   
+               var out = getCharCount();
+               document.getElementById('out2').innerHTML = out;
+            },false);
+            var vowbtn = document.getElementById('vowbtn');
+            vowbtn.addEventListener('click', function(){    
+               var out = vowelCount();
+               document.getElementById('out2').innerHTML = out;
+            },false);
+            var dotbtn = document.getElementById('dotbtn');
+            dotbtn.addEventListener('click', function(){ 
+               var out = getNoOfStatements();
+               document.getElementById('out2').innerHTML = out;
+            },false);
+            var indbtn = document.getElementById('indbtn');
+            indbtn.addEventListener('click', function(){
+               var c = document.getElementById('in2').value;     
+               var out = getIndexofChar(c);
+               document.getElementById('out2').innerHTML = out;
+            },false);
+
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>String Methods</h1>
+    </div>
+    <br/>
+    <div id="out"></div><br/>
+    <div id="out1"></div><br/>
+    Type 'u' or 'U' for uppercase and 'l' or 'L' for lowercase
+    <br/>
+    <input type="text" id="in1">
+    <input type="button" value="Submit" id="changeCasebtn"><br/><br/>
+    <input type="button" value="Length of String passed" id="lenbtn"><br/>
+    <input type="button" value="Vowels present in the String" id="vowbtn"><br/>
+    <input type="button" value="No of Statements in the String" id="dotbtn"><br/>
+    <input type="text" id="in2">
+    <input type="button" value="Get Index of a character in String" id="indbtn"><br/>
+    <div id="out2"></div><br/>
+
+
+    
+</body>
+</html>
