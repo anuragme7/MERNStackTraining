@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="./addlogic.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color:rgb(161, 161, 212);
+            height: 100vh;
+        }
+        #cont{
+            margin-top: 40px;
+            margin-left: 400px;
+            max-width: 500px;
+            height: 330px;
+            border: 2px solid rgb(83, 81, 81);
+            background-color: rgb(255, 217, 217);
+        }
+        #fields{
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="button" style="float:right; margin-right: 10px;" value="Log Out" id='logout'> 
+        <h5 id="logged" style="float:right; margin-right: 10px;"></h5><br>
+        <h3>Add a Product</h3>
+    </div> 
+    <h5><div id='out' style='text-align: center;'></div></h5>
+    <br>  <br>
+    <div id='cont'>
+        <div id='fields' >
+            DeptNo : <input type="number" min="0" name="clr" id="deptno"> <br> <br>
+            DeptName : <input type="text" name="clr" id="deptname"> <br> <br>
+            Location : <input type="text" name="clr" id="location"> <br> <br>
+            Capacity : <input type="number" min="0" name="clr" id="capacity"> <br> <br>
+            <input type="button" value="Submit" id='sbtbtn'>
+            <input type="button" value="Clear" id='clrbtn'>
+            <input type="button" value="See All Products" id='prod'>
+            <div id='msg' ></div>
+        </div>    
+    </div>
+    <a style="display:none;" href="/Departments" id="department"></a>
+    <a style="display:none;" href="/Logout" id="Logoutbtn"></a>
+</body>
+</html>

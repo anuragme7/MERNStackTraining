@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="./departmentslogic.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color:rgb(161, 161, 212);
+            height: 100vh;
+        }
+        #prod{
+            background-color:rgb(252, 224, 224);
+        }
+        #out, #cont{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="button" style="float:right; margin-right: 10px;" value="Log Out" id='logout'> 
+        <h5 id="logged" style="float:right; margin-right: 10px;"></h5><br>
+    </div>    
+    <h3>Available Departments</h3>
+    <h5><div id='out'></div></h5>
+    <div id='cont'>
+            <h6>Search By DeptNo : <input type="number" id="searchid"> 
+            <input type="button" value="Search" id='searchbtn'></h6><br>
+            <input type="button" value="Add Department" id='addpro'><br><br>
+            <div id='del'></div> <br>
+            <div id='msg'></div><br>
+            <div id="prod" class="table-responsive"></div>
+    </div>    
+    <a style="display:none;" href="/Logout" id="Logoutbtn"></a>
+    <a style="display:none;" href="/AddDepartment" id="adddepartment"></a>
+    <a style="display:none;" href="/UpdateDepartment" id="upddepartment"></a>
+</body>
+</html>

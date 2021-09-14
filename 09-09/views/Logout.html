@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color:rgb(161, 161, 212);
+            height: 100vh;
+        }
+        h3{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align:center;
+        }
+        input{
+            position: absolute;
+            left: 50%;
+            top: 60%;
+            transform: translate(-50%, -50%);
+            text-align:center;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            document.getElementById('loginag').addEventListener('click',function(){
+
+                document.getElementById('loginx').click();
+            },false);
+        }
+    </script>
+</head>
+<body>
+    <h3>You have succesfully logged out. </h3>
+    <input type="button" value="Login Again" id='loginag'>
+    <a style="display:none;" href="/" id="loginx"></a>
+</body>
+</html>
