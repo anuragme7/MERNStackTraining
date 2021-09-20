@@ -3,7 +3,7 @@ const path = require("path");
 // load sequelize object Model
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize("Company", "root", "Manofsteel@1", {
+const sequelize = new Sequelize("Company", "root", "P@ssw0rd", {
   host: "localhost",
   dialect: "mysql",
   pool: {
