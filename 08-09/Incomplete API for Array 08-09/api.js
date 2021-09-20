@@ -18,7 +18,7 @@ instance.use(
 
 // define DB COnnection using sequelize object Model
 // databasename, username, password
-const sequelize = new Sequelize("Company", "root", "Manofsteel@1", {
+const sequelize = new Sequelize("Company", "root", "P@ssw0rd", {
   host: "localhost", // server name
   dialect: "mysql", // database provider
   pool: {
